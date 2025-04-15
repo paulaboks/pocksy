@@ -1,4 +1,4 @@
-import type { Payload } from "jsr:@zaubrik/djwt"
+import type { Payload } from "djwt"
 
 import { create_token, verify_token } from "./auth.ts"
 import type { CookieJar } from "./cookies.ts"

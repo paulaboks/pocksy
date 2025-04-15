@@ -1,4 +1,4 @@
-import { create, getNumericDate, type Payload, verify } from "jsr:@zaubrik/djwt"
+import { create, getNumericDate, type Payload, verify } from "djwt"
 
 import type { CookieJar } from "./cookies.ts"
 
