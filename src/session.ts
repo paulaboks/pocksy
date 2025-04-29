@@ -3,11 +3,9 @@ import type { Payload } from "djwt"
 import { create_token, verify_token } from "./auth.ts"
 import type { CookieJar } from "./cookies.ts"
 
-export interface State<T> {
+export interface State {
 	cookies: CookieJar
 	session: Session
-
-	data: T
 }
 
 export class Session {
@@ -47,7 +45,7 @@ export class Session {
 const SESSION_COOKIE_NAME = "session_jwt"
 
 export async function set_cookie_jwt(
-	state: State<unknown>,
+	state: State,
 	payload: unknown,
 	cookie_name: string,
 	expires: number | string | Date = 0,
@@ -62,7 +60,7 @@ export async function set_cookie_jwt(
 }
 
 export async function get_cookie_jwt(
-	state: State<unknown>,
+	state: State,
 	cookie_name: string,
 ): Promise<Payload | undefined> {
 	const maybe_cookie = state.cookies.get(cookie_name)
@@ -72,7 +70,7 @@ export async function get_cookie_jwt(
 	return await verify_token(maybe_cookie.value)
 }
 
-export async function start_session(state: State<unknown>): Promise<void> {
+export async function start_session(state: State): Promise<void> {
 	const maybe_cookie = state.cookies.get(SESSION_COOKIE_NAME)
 
 	if (!maybe_cookie) {
@@ -93,7 +91,7 @@ export async function start_session(state: State<unknown>): Promise<void> {
 	}
 }
 
-export async function save_session(state: State<unknown>): Promise<void> {
+export async function save_session(state: State): Promise<void> {
 	if (state.session.modified) {
 		await set_cookie_jwt(
 			state,
@@ -103,6 +101,6 @@ export async function save_session(state: State<unknown>): Promise<void> {
 	}
 }
 
-export function delete_session(state: State<unknown>): void {
+export function delete_session(state: State): void {
 	state.cookies.delete(SESSION_COOKIE_NAME)
 }
