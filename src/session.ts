@@ -104,3 +104,15 @@ export async function save_session(state: State): Promise<void> {
 export function delete_session(state: State): void {
 	state.cookies.delete(SESSION_COOKIE_NAME)
 }
+
+export function flash(session: Session, message: string) {
+	const flashes = session.get("flashes") as string[] ?? []
+	flashes.push(message)
+	session.set("flashes", flashes)
+}
+
+export function get_flashed_messages(session: Session): string[] {
+	const flashes = session.get("flashes") as string[] ?? []
+	session.set("flashes", [])
+	return flashes
+}
