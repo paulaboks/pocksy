@@ -1,6 +1,6 @@
 {
 	"name": "@paulaboks/pocksy",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"exports": "./mod.ts",
 	"imports": {
 		"djwt": "jsr:@zaubrik/djwt@3.0.2"
